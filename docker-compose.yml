@@ -10,6 +10,10 @@ services:
       - "8081:8081"
     env_file:
       - .env
+    environment:
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      EUREKA_HOST: ${EUREKA_HOST}
     restart: unless-stopped
     networks:
       - backend
