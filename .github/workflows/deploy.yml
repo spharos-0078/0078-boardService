@@ -1,0 +1,49 @@
+name: Deploy Board Service
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Gradle
+        run: ./gradlew bootJar
+
+      - name: Save PEM file
+        run: |
+          echo "${{ secrets.EC2_PEM_KEY }}" > board-key.pem
+          chmod 400 board-key.pem
+
+      - name: Copy files to EC2
+        run: |
+          ssh -i board-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "mkdir -p board-service"
+
+          scp -i board-key.pem -o StrictHostKeyChecking=no \
+          build/libs/*.jar \
+          ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/board-service/board.jar
+
+          scp -i board-key.pem -o StrictHostKeyChecking=no \
+          Dockerfile docker-compose.yml .env \
+          ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/board-service/
+
+      - name: Remote deploy on EC2
+        run: |
+          ssh -i board-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd board-service
+            docker compose down
+            docker compose build
+            docker compose up -d
+          EOF
