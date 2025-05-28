@@ -3,7 +3,7 @@ name: Deploy Board Service
 on:
   push:
     branches:
-      - devlop
+      - develop
 
 jobs:
   build-and-deploy:
