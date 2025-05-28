@@ -1,1 +1,17 @@
-spring.application.name=board-service
+server:
+  port: 8081
+  forward-headers-strategy: framework
+
+# Spring Application ??
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: board-service
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${EUREKA_HOST}:8761/eureka/
