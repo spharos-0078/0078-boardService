@@ -3,7 +3,7 @@ name: Deploy Board Service
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   build-and-deploy:
@@ -22,7 +22,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew bootJar
 
-      - name: Save PEM file
+      - name: Save PEM key
         run: |
           echo "${{ secrets.EC2_PEM_KEY }}" > board-key.pem
           chmod 400 board-key.pem
@@ -39,7 +39,7 @@ jobs:
           Dockerfile docker-compose.yml .env \
           ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/board-service/
 
-      - name: Remote deploy on EC2
+      - name: Remote Deploy
         run: |
           ssh -i board-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd board-service
