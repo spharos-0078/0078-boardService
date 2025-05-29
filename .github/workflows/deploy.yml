@@ -34,6 +34,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Create .env file
+        run: |
+          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> .env
+          echo "EUREKA_HOST=${{ secrets.EUREKA_HOST }}" >>.env
+
       - name: Build and Push Docker Image to Docker Hub
         uses: docker/build-push-action@v5
         with:
@@ -47,10 +52,15 @@ jobs:
           echo "${{ secrets.EC2_PEM_KEY }}" > board-key.pem
           chmod 400 board-key.pem
 
-      - name: Inject Docker username and copy compose to EC2
+      - name: Create target directory on EC2
+        run: |
+          ssh -i board-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+          "mkdir -p /home/${{ secrets.EC2_USER }}/board-service"
+
+      - name: Copy docker-compose.yml to EC2
         run: |
           sed "s|\${DOCKER_USERNAME}|${{ secrets.DOCKER_USERNAME }}|g" docker-compose.yml > docker-compose.remote.yml
-
+          
           scp -i board-key.pem -o StrictHostKeyChecking=no \
           docker-compose.remote.yml \
           ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/board-service/docker-compose.yml
@@ -60,5 +70,5 @@ jobs:
           ssh -i board-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd ~/board-service
             docker compose pull
-            docker compose up -d
+            docker-compose up -f docker-compose.remote.yml -d
           EOF
