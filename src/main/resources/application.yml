@@ -2,12 +2,13 @@ server:
   port: 8081
   forward-headers-strategy: framework
 
-# Spring Application ??
 spring:
   main:
     web-application-type: reactive
   application:
     name: board-service
+  profiles:
+    active: local
 
   datasource:
     url: jdbc:mysql://${EUREKA_HOST}:3306/piece_of_cake
