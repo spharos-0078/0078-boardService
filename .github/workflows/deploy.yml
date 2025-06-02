@@ -1,4 +1,4 @@
-name: Deploy Gateway from Docker Hub to EC2
+name: Deploy board-service from Docker Hub to EC2
 
 on:
   push:
@@ -45,36 +45,36 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/gateway:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/board-service:latest
 
       - name: Save PEM file
         run: |
-          echo "${{ secrets.EC2_PEM_KEY }}" > gateway-key.pem
-          chmod 400 gateway-key.pem
+          echo "${{ secrets.EC2_PEM_KEY }}" > board-key.pem
+          chmod 400 board-key.pem
 
       - name: Create target directory on EC2
         run: |
-          ssh -i gateway-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
-          "mkdir -p /home/${{ secrets.EC2_USER }}/gateway"
+          ssh -i board-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+          "mkdir -p /home/${{ secrets.EC2_USER }}/board-service"
 
       - name: Copy docker-compose.yml and .env to EC2
         run: |
           sed "s|\${DOCKER_USERNAME}|${{ secrets.DOCKER_USERNAME }}|g" docker-compose.yml > docker-compose.remote.yml
 
-          scp -i gateway-key.pem -o StrictHostKeyChecking=no \
+          scp -i board-key.pem -o StrictHostKeyChecking=no \
           docker-compose.remote.yml .env \
-          ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/gateway/
+          ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/board-service/
 
       - name: Remote Docker Compose Pull & Up
         run: |
-          ssh -i gateway-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            cd ~/gateway
+          ssh -i board-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd ~/board-service
             mv docker-compose.remote.yml docker-compose.yml
           
             docker compose pull
             
             docker compose down || true
-            docker rm -f board_service gateway_service eureka_server || true
+            docker rm -f board-service || true
           
             docker compose --env-file .env up -d
           EOF
