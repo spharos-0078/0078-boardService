@@ -82,5 +82,5 @@ jobs:
 
             echo "[✔] 이미지 pull 및 컨테이너 재시작"
             docker compose pull
-            docker compose up -d
+            docker compose --env-file .env up -d
           EOF
