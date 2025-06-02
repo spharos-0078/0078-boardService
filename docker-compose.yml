@@ -5,7 +5,7 @@ services:
     container_name: board_service
     image: ${DOCKER_USERNAME}/board-service:latest  # Docker Hub 이미지 사용
     ports:
-      - "8081:8081"
+      - "8082:8082"
     env_file:
       - .env
     environment:
