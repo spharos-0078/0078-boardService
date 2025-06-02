@@ -10,12 +10,6 @@ spring:
   profiles:
     active: local
 
-  datasource:
-    url: jdbc:mysql://${EUREKA_HOST}:3306/piece_of_cake
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
   jpa:
     hibernate:
       ddl-auto: update
