@@ -8,11 +8,6 @@ services:
       - "8082:8082"
     env_file:
       - .env
-    environment:
-      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      EUREKA_HOST: ${EUREKA_HOST}
-      SPRING_PROFILES_ACTIVE: dev
     networks:
       - backend
 
