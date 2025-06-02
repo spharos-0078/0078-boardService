@@ -39,7 +39,7 @@ jobs:
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" > .env
           echo "SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}" >> .env
           echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}" >> .env
-          echo "EUREKA_HOST=${{ secrets.EUREKA_HOST }}" >> .env
+          echo "EC2_HOST=${{ secrets.EC2_HOST }}" >> .env
 
       - name: Build and Push Docker Image to Docker Hub
         uses: docker/build-push-action@v5
