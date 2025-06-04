@@ -1,4 +1,4 @@
-package com.pieceofcake.board_service.board.infrastructure;
+package com.pieceofcake.board_service.board.presentation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

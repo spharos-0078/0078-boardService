@@ -73,8 +73,8 @@ jobs:
             cd ~/board-service
             mv docker-compose.remote.yml docker-compose.yml
 
-            echo "🟡 현재 .env 파일 내용 확인:"
-            cat .env
+            echo "[✔] .env 파일 내용 확인:"
+            cat .env || echo ".env 파일이 없습니다!"
 
             echo "[✔] 기존 컨테이너 종료 및 제거"
             docker compose down || true
@@ -82,5 +82,5 @@ jobs:
 
             echo "[✔] 이미지 pull 및 컨테이너 재시작"
             docker compose pull
-            docker compose --env-file .env up -d
+            docker compose up -d
           EOF
