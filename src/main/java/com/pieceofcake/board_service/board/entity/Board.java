@@ -20,24 +20,23 @@ public class Board {
     private String boardTitle;
 
     @Column(nullable = false, columnDefinition = "LONGTEXT")
-    private String boardContent;
+    private String boardContent; // Text
 
     @Column(nullable = false)
     private String memberUuid;
 
     @Column(nullable = false, unique = true)
-    private String memberNickname;
+    private String memberNickname; // 빼는게 맞아용
 
-    @Column(nullable = false)
-    private LocalDateTime startDate;
+    private LocalDateTime startDate; // null 값이 많을 수 있어서 아예 mongodb 사용하는 것이 나을 수도 있다
 
     private LocalDateTime endDate;
 
     @Column(nullable = false)
-    private BoardType boardType;
+    private BoardType boardType; // 추가될 일이 많을 것 같을 때 -> enum 대신 table
 
     @Column(nullable = false)
-    private BoardState boardState;
+    private BoardState boardState; // 상태가 하나라면 boolean으로
 
     @Column(nullable = false)
     private BoardCategory boardCategory;

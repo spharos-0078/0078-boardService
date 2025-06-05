@@ -26,7 +26,7 @@ public class BoardController {
         return ResponseEntity.ok("Hello from board-service!");
     }
 
-
+    // 공지사항, FAQ, 이벤트, 일반 문의 각각 게시판 전체조회
     @Operation(summary = "게시판 전체 조회")
     @GetMapping("/list/{boardType}")
     public BaseResponseEntity<List<GetBoardResponseVo>> getBoardList(
