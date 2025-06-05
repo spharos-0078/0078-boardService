@@ -21,4 +21,7 @@ public class BoardServiceImpl implements BoardService {
         return boardList.stream().map(GetBoardResponseDto::from).toList();
     }
 
+    // pagable
+    // 동적 호출 -> query dsl
+
 }
