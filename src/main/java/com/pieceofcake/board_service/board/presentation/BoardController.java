@@ -8,10 +8,7 @@ import com.pieceofcake.board_service.common.entity.BaseResponseEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,10 +19,13 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    // Test API
+    @Operation(summary = "조회 테스트 API")
     @GetMapping
     public ResponseEntity<String> hello() {
         return ResponseEntity.ok("Hello from board-service!");
     }
+
 
     @Operation(summary = "게시판 전체 조회")
     @GetMapping("/list/{boardType}")
