@@ -1,9 +1,8 @@
 package com.pieceofcake.board_service.board.dto.out;
 
-import com.pieceofcake.board_service.board.entity.Board;
-import com.pieceofcake.board_service.board.entity.BoardCategory;
-import com.pieceofcake.board_service.board.entity.BoardState;
-import com.pieceofcake.board_service.board.entity.BoardType;
+import com.pieceofcake.board_service.board.domain.Board;
+import com.pieceofcake.board_service.board.domain.BoardCategory;
+import com.pieceofcake.board_service.board.domain.BoardType;
 import com.pieceofcake.board_service.board.vo.out.GetBoardResponseVo;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,28 +18,24 @@ public class GetBoardResponseDto {
     private String boardTitle;
     private String boardContent;
     private String memberUuid;
-    private String memberNickname;
-    private LocalDateTime startDate;
+    private LocalDateTime createdAt;
     private LocalDateTime endDate;
     private BoardType boardType;
-    private BoardState boardState;
     private BoardCategory boardCategory;
 
     @Builder
     public GetBoardResponseDto(
             String boardUuid, String boardTitle, String boardContent, String memberUuid,
-            String memberNickname, LocalDateTime startDate, LocalDateTime endDate,
-            BoardType boardType, BoardState boardState, BoardCategory boardCategory
+            LocalDateTime createdAt, LocalDateTime endDate,
+            BoardType boardType, BoardCategory boardCategory
     ) {
         this.boardUuid = boardUuid;
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
         this.memberUuid = memberUuid;
-        this.memberNickname = memberNickname;
-        this.startDate = startDate;
+        this.createdAt = createdAt;
         this.endDate = endDate;
         this.boardType = boardType;
-        this.boardState = boardState;
         this.boardCategory = boardCategory;
     }
 
@@ -51,11 +46,9 @@ public class GetBoardResponseDto {
                 .boardContent(board.getBoardContent())
                 .boardContent(board.getBoardContent())
                 .memberUuid(board.getMemberUuid())
-                .memberNickname(board.getMemberNickname())
-                .startDate(board.getStartDate())
+                .createdAt(board.getCreatedAt())
                 .endDate(board.getEndDate())
                 .boardType(board.getBoardType())
-                .boardState(board.getBoardState())
                 .boardCategory(board.getBoardCategory())
                 .build();
     }
@@ -66,11 +59,9 @@ public class GetBoardResponseDto {
                 .boardTitle(this.boardTitle)
                 .boardContent(this.boardContent)
                 .memberUuid(this.memberUuid)
-                .memberNickname(this.memberNickname)
-                .startDate(this.startDate)
+                .createdAt(this.createdAt)
                 .endDate(this.endDate)
                 .boardType(this.boardType)
-                .boardState(this.boardState)
                 .boardCategory(this.boardCategory)
                 .build();
     }

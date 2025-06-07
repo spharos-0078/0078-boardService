@@ -1,8 +1,9 @@
 package com.pieceofcake.board_service.board.application;
 
+import com.pieceofcake.board_service.board.dto.in.CreateBoardRequestDto;
 import com.pieceofcake.board_service.board.dto.out.GetBoardResponseDto;
-import com.pieceofcake.board_service.board.entity.Board;
-import com.pieceofcake.board_service.board.entity.BoardType;
+import com.pieceofcake.board_service.board.domain.Board;
+import com.pieceofcake.board_service.board.domain.BoardType;
 import com.pieceofcake.board_service.board.infrastructure.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,11 @@ public class BoardServiceImpl implements BoardService {
 
     // pagable
     // 동적 호출 -> query dsl
+
+    // 게시글 생성
+    @Override
+    public void createBoard(CreateBoardRequestDto createBoardRequestDto) {
+        boardRepository.save(createBoardRequestDto.toEntity());
+    }
 
 }

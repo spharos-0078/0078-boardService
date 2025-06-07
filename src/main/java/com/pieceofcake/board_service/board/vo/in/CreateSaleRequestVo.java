@@ -9,13 +9,17 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class CreateBoardRequestVo {
+public class CreateSaleRequestVo {
 
     private String boardTitle;
     private String boardContent;
     private LocalDateTime createdAt;
-    private LocalDateTime endDate;
     private BoardType boardType;
     private BoardCategory boardCategory;
+    private Long desiredPrice;
+    private String mainCategoryId;
+    private String subCategoryId;
+    private String mainCategoryName;
+    private String subCategoryName;
 
 }
