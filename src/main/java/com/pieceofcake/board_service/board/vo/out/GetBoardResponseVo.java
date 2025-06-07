@@ -3,9 +3,13 @@ package com.pieceofcake.board_service.board.vo.out;
 import com.pieceofcake.board_service.board.domain.BoardCategory;
 import com.pieceofcake.board_service.board.domain.BoardType;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Getter
+@NoArgsConstructor
 public class GetBoardResponseVo {
 
     private String boardUuid;
