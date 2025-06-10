@@ -9,7 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -23,11 +25,14 @@ public class CreateBoardRequestDto {
     private LocalDateTime endDate;
     private BoardType boardType;
     private BoardCategory boardCategory;
+    private List<BoardImageRequestDto> boardImageRequestDtoList;
 
     @Builder
     public CreateBoardRequestDto(String boardUuid, String boardTitle, String boardContent,
                                  String memberUuid, LocalDateTime createdAt, LocalDateTime endDate,
-                                 BoardType boardType, BoardCategory boardCategory) {
+                                 BoardType boardType, BoardCategory boardCategory,
+                                 List<BoardImageRequestDto> boardImageRequestDtoList
+    ) {
         this.boardUuid = boardUuid;
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
@@ -36,6 +41,7 @@ public class CreateBoardRequestDto {
         this.endDate = endDate;
         this.boardType = boardType;
         this.boardCategory = boardCategory;
+        this.boardImageRequestDtoList = boardImageRequestDtoList;
     }
 
     public static CreateBoardRequestDto from(String memberUuid, CreateBoardRequestVo createBoardRequestVo) {
@@ -48,10 +54,12 @@ public class CreateBoardRequestDto {
                 .endDate(createBoardRequestVo.getEndDate())
                 .boardType(createBoardRequestVo.getBoardType())
                 .boardCategory(createBoardRequestVo.getBoardCategory())
+                .boardImageRequestDtoList(createBoardRequestVo.getBoardImageRequestVoList()
+                        .stream().map(BoardImageRequestDto::from).toList())
                 .build();
     }
 
-    public Board toEntity() {
+    public Board toEntity(String boardUuid) {
         return Board.builder()
                 .boardUuid(boardUuid)
                 .boardTitle(boardTitle)
