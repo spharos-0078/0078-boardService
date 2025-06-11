@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 @Document(collection = "board_images")
@@ -25,18 +27,25 @@ public class BoardImage {
     // 게시판 썸네일 여부
     private Boolean boardThumbnail;
 
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
     @Builder
     public BoardImage(
             String id,
             String boardUuid,
             String boardImageUrl,
             Integer boardImageOrder,
-            Boolean boardThumbnail
+            Boolean boardThumbnail,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
     ) {
         this.id = id;
         this.boardUuid = boardUuid;
         this.boardImageUrl = boardImageUrl;
         this.boardImageOrder = boardImageOrder;
         this.boardThumbnail = boardThumbnail;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }

@@ -43,6 +43,8 @@ public class Board {
     // 마감일 (이벤트)
     private LocalDateTime endDate;
 
+    private LocalDateTime updatedAt;
+
     // 판매 희망 가격
     private Long desiredPrice;
 
@@ -73,6 +75,7 @@ public class Board {
             String memberUuid,
             LocalDateTime createdAt,
             LocalDateTime endDate,
+            LocalDateTime updatedAt,
             Long desiredPrice,
             Long aiEstimatedPrice,
             String mainCategoryId,
@@ -90,6 +93,7 @@ public class Board {
         this.memberUuid = memberUuid;
         this.createdAt = createdAt;
         this.endDate = endDate;
+        this.updatedAt = updatedAt;
         this.desiredPrice = desiredPrice;
         this.aiEstimatedPrice = aiEstimatedPrice;
         this.mainCategoryId = mainCategoryId;

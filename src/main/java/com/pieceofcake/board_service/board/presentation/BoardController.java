@@ -33,7 +33,9 @@ public class BoardController {
     // 페이지네이션 적용할 것
     @Operation(summary = "게시판 타입별 전체 조회")
     @GetMapping("/list/{boardType}")
-    public BaseResponseEntity<List<GetBoardResponseVo>> getBoardList(@PathVariable("boardType") BoardType boardType) {
+    public BaseResponseEntity<List<GetBoardResponseVo>> getBoardList(
+            @PathVariable("boardType") BoardType boardType
+    ) {
         List<GetBoardResponseVo> result = boardService.getBoardList(boardType)
                 .stream().map(GetBoardResponseDto::toVo).toList();
         return new BaseResponseEntity<>(result);
