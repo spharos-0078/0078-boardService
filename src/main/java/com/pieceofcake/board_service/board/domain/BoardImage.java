@@ -1,5 +1,6 @@
 package com.pieceofcake.board_service.board.domain;
 
+import com.pieceofcake.board_service.common.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @Document(collection = "board_images")
-public class BoardImage {
+public class BoardImage extends BaseEntity {
     @Id
     private String id;
 

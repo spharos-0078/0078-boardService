@@ -9,7 +9,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://${EC2_MONGOID}:${EC2_MONGOPW}@${EC2_HOST}:27017/board-service
+      uri: mongodb://${EC2_MONGOID}:${EC2_MONGOPW}@${EC2_HOST}:27017/piece_of_cake
       auto-index-creation: true
 
 eureka:

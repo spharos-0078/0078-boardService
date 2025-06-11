@@ -1,5 +1,6 @@
 package com.pieceofcake.board_service.board.domain;
 
+import com.pieceofcake.board_service.common.entity.BaseEntity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @Document(collection = "board_db")
-public class Board {
+public class Board extends BaseEntity {
     @Id
     private String id;
 
