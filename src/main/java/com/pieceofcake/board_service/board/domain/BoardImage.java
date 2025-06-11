@@ -28,25 +28,18 @@ public class BoardImage extends BaseEntity {
     // 게시판 썸네일 여부
     private Boolean boardThumbnail;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
     @Builder
     public BoardImage(
             String id,
             String boardUuid,
             String boardImageUrl,
             Integer boardImageOrder,
-            Boolean boardThumbnail,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt
+            Boolean boardThumbnail
     ) {
         this.id = id;
         this.boardUuid = boardUuid;
         this.boardImageUrl = boardImageUrl;
         this.boardImageOrder = boardImageOrder;
         this.boardThumbnail = boardThumbnail;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 }

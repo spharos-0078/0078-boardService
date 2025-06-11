@@ -21,7 +21,6 @@ public class CreateBoardRequestDto {
     private String boardTitle;
     private String boardContent;
     private String memberUuid;
-    private LocalDateTime createdAt;
     private LocalDateTime endDate;
     private BoardType boardType;
     private BoardCategory boardCategory;
@@ -29,7 +28,7 @@ public class CreateBoardRequestDto {
 
     @Builder
     public CreateBoardRequestDto(String boardUuid, String boardTitle, String boardContent,
-                                 String memberUuid, LocalDateTime createdAt, LocalDateTime endDate,
+                                 String memberUuid, LocalDateTime endDate,
                                  BoardType boardType, BoardCategory boardCategory,
                                  List<BoardImageRequestDto> boardImageRequestDtoList
     ) {
@@ -37,7 +36,6 @@ public class CreateBoardRequestDto {
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
         this.memberUuid = memberUuid;
-        this.createdAt = createdAt;
         this.endDate = endDate;
         this.boardType = boardType;
         this.boardCategory = boardCategory;
@@ -50,7 +48,6 @@ public class CreateBoardRequestDto {
                 .boardTitle(createBoardRequestVo.getBoardTitle())
                 .boardContent(createBoardRequestVo.getBoardContent())
                 .memberUuid(memberUuid)
-                .createdAt(createBoardRequestVo.getCreatedAt())
                 .endDate(createBoardRequestVo.getEndDate())
                 .boardType(createBoardRequestVo.getBoardType())
                 .boardCategory(createBoardRequestVo.getBoardCategory())
@@ -65,7 +62,6 @@ public class CreateBoardRequestDto {
                 .boardTitle(boardTitle)
                 .boardContent(boardContent)
                 .memberUuid(memberUuid)
-                .createdAt(createdAt)
                 .endDate(endDate)
                 .boardType(boardType)
                 .boardCategory(boardCategory)

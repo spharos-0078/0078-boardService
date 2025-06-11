@@ -16,7 +16,6 @@ public class CreateBoardRequestVo {
 
     private String boardTitle;
     private String boardContent;
-    private LocalDateTime createdAt;
     private LocalDateTime endDate;
     private BoardType boardType;
     private BoardCategory boardCategory;
@@ -24,13 +23,12 @@ public class CreateBoardRequestVo {
 
     @Builder
     public CreateBoardRequestVo(
-            String boardTitle, String boardContent, LocalDateTime createdAt,
+            String boardTitle, String boardContent,
             LocalDateTime endDate, BoardType boardType, BoardCategory boardCategory,
             List<BoardImageRequestVo> boardImageRequestVoList
     ) {
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
-        this.createdAt = createdAt;
         this.endDate = endDate;
         this.boardType = boardType;
         this.boardCategory = boardCategory;
