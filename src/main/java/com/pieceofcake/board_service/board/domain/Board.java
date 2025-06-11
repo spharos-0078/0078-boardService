@@ -1,5 +1,6 @@
 package com.pieceofcake.board_service.board.domain;
 
+import com.pieceofcake.board_service.common.entity.BaseEntity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @Document(collection = "board_db")
-public class Board {
+public class Board extends BaseEntity {
     @Id
     private String id;
 
@@ -43,6 +44,8 @@ public class Board {
     // 마감일 (이벤트)
     private LocalDateTime endDate;
 
+    private LocalDateTime updatedAt;
+
     // 판매 희망 가격
     private Long desiredPrice;
 
@@ -73,6 +76,7 @@ public class Board {
             String memberUuid,
             LocalDateTime createdAt,
             LocalDateTime endDate,
+            LocalDateTime updatedAt,
             Long desiredPrice,
             Long aiEstimatedPrice,
             String mainCategoryId,
@@ -90,6 +94,7 @@ public class Board {
         this.memberUuid = memberUuid;
         this.createdAt = createdAt;
         this.endDate = endDate;
+        this.updatedAt = updatedAt;
         this.desiredPrice = desiredPrice;
         this.aiEstimatedPrice = aiEstimatedPrice;
         this.mainCategoryId = mainCategoryId;

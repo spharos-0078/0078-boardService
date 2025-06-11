@@ -8,12 +8,8 @@ import com.pieceofcake.board_service.board.domain.Board;
 import com.pieceofcake.board_service.board.domain.BoardType;
 import com.pieceofcake.board_service.board.infrastructure.BoardImageRepository;
 import com.pieceofcake.board_service.board.infrastructure.BoardRepository;
-import com.pieceofcake.board_service.board.vo.in.CreateBoardRequestVo;
-import com.pieceofcake.board_service.common.entity.BaseResponseEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 import java.util.UUID;
