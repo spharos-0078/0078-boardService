@@ -4,12 +4,6 @@ spring:
       uri: mongodb://admin:admin123@127.0.0.1:27020/board-service?authSource=admin
       auto-index-creation: true
 
-  DataSource:
-    url: jdbc:mysql://localhost:3306/board_db
-    username: root
-    password: 12341234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
 eureka:
   client:
     register-with-eureka: true
