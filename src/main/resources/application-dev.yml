@@ -1,9 +1,10 @@
 spring:
   config:
     import: optional:dotenv:.env
+
   data:
     mongodb:
-      uri: mongodb://${EC2_MONGOID}:${EC2_MONGOPW}@${EC2_HOST}:27017/piece_of_cake
+      uri: mongodb+srv://${EC2_MONGOID}:${EC2_MONGOPW}@spharos.uxnx7ao.mongodb.net/piece_of_cake?retryWrites=true&w=majority
       auto-index-creation: true
 
 eureka:
