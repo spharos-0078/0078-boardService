@@ -13,7 +13,6 @@ public class CreateSaleRequestVo {
 
     private String boardTitle;
     private String boardContent;
-    private LocalDateTime createdAt;
     private BoardType boardType;
     private BoardCategory boardCategory;
     private Long desiredPrice;
