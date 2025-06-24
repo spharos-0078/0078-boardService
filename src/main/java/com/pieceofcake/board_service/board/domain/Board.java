@@ -59,6 +59,8 @@ public class Board extends BaseEntity {
     // 서브 카테고리 명
     private String subCategoryName;
 
+    private boolean deleted = false;
+
     @Builder
     public Board(
             String id,
@@ -75,7 +77,8 @@ public class Board extends BaseEntity {
             String mainCategoryId,
             String subCategoryId,
             String mainCategoryName,
-            String subCategoryName
+            String subCategoryName,
+            boolean deleted
     ) {
         this.id = id;
         this.boardUuid = boardUuid;
@@ -92,5 +95,8 @@ public class Board extends BaseEntity {
         this.subCategoryId = subCategoryId;
         this.mainCategoryName = mainCategoryName;
         this.subCategoryName = subCategoryName;
+        this.deleted = deleted;
     }
+
+    public void softDelete() { this.deleted = true; }
 }
