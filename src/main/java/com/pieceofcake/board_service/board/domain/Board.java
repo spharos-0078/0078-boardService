@@ -25,9 +25,6 @@ public class Board extends BaseEntity {
     // 문의 답변 완료 여부
     private Boolean boardAnswered;
 
-    // 게시판 카테고리
-    private BoardCategory boardCategory;
-
     // 게시판 제목 or 판매문의 상품명
     private String boardTitle;
 
@@ -67,7 +64,6 @@ public class Board extends BaseEntity {
             String boardUuid,
             BoardType boardType,
             Boolean boardAnswered,
-            BoardCategory boardCategory,
             String boardTitle,
             String boardContent,
             String memberUuid,
@@ -84,7 +80,6 @@ public class Board extends BaseEntity {
         this.boardUuid = boardUuid;
         this.boardType = boardType;
         this.boardAnswered = boardAnswered;
-        this.boardCategory = boardCategory;
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
         this.memberUuid = memberUuid;
