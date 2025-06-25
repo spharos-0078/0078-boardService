@@ -1,14 +1,15 @@
 package com.pieceofcake.board_service.board.presentation;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.pieceofcake.board_service.board.application.BoardService;
 import com.pieceofcake.board_service.board.dto.in.CreateBoardRequestDto;
 import com.pieceofcake.board_service.board.dto.in.CreateCommunityRequestDto;
-import com.pieceofcake.board_service.board.dto.out.GetBoardResponseDto;
+import com.pieceofcake.board_service.board.dto.out.*;
 import com.pieceofcake.board_service.board.domain.BoardType;
 import com.pieceofcake.board_service.board.vo.in.CreateBoardRequestVo;
 import com.pieceofcake.board_service.board.vo.in.CreateCommunityRequestVo;
 import com.pieceofcake.board_service.board.vo.in.CreateSaleRequestVo;
-import com.pieceofcake.board_service.board.vo.out.GetBoardResponseVo;
+import com.pieceofcake.board_service.board.vo.out.*;
 import com.pieceofcake.board_service.common.entity.BaseResponseEntity;
 import com.pieceofcake.board_service.common.entity.BaseResponseStatus;
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,17 +55,49 @@ public class BoardController {
 //        return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
 //    }
 
-    // @GetMapping("/notice") -> 공지사항 전체 조회 (아무나)
+    @Operation(summary = "공지사항 UUID 리스트 조회")
+    @GetMapping("/notice")
+    public BaseResponseEntity<List<GetNoticeUuidResponseVo>> getNoticeBoardUuidList() {
+        List<GetNoticeUuidResponseVo> noticeList = boardService.getNoticeBoardUuidListByBoardType(BoardType.REPORT)
+                .stream().map(GetNoticeUuidResponseDto::toVo).toList();
 
-    // @GetMapping("/notice/{boardUuid}") -> 공지사항 단건 조회 (아무나)
+        return new BaseResponseEntity<>(noticeList);
+    }
 
-    // @GetMapping("/event") -> 이벤트 전체 조회 (아무나)
+    @Operation(summary = "공지사항 상세 조회")
+    @GetMapping("/notice/{boardUuid}")
+    public BaseResponseEntity<GetNoticeResponseVo> getNoticeDetail(@PathVariable String boardUuid) {
+        return new BaseResponseEntity<>(boardService.getNoticeBoardByBoardUuid(boardUuid).toVo());}
 
-    // @GetMapping("/event/{boardUuid}") -> 이벤트 단건 조회 (아무나)
+    @Operation(summary = "이벤트 UUID 리스트 조회")
+    @GetMapping("/event")
+    public BaseResponseEntity<List<GetEventUuidResponseVo>> getEventBoardUuidList() {
+        List<GetEventUuidResponseVo> eventList = boardService.getEventBoardUuidListByBoardType(BoardType.EVENT)
+                .stream().map(GetEventUuidResponseDto::toVo).toList();
 
-    // @GetMapping("/faq") -> FAQ 전체 조회 (아무나)
+        return new BaseResponseEntity<>(eventList);
+    }
 
-    // @GetMapping("/faq/{boardUuid}") -> FAQ 단건 조회 (아무나)
+    @Operation(summary = "이벤트 상세 조회")
+    @GetMapping("/event/{boardUuid}")
+    public BaseResponseEntity<GetEventResponseVo> getEventDetail(@PathVariable String boardUuid) {
+        return new BaseResponseEntity<>(boardService.getEventBoardByBoardUuid(boardUuid).toVo());
+    }
+
+    @Operation(summary = "FAQ UUID 리스트 조회")
+    @GetMapping("/faq")
+    public BaseResponseEntity<List<GetFaqUuidResponseVo>> getFaqBoardUuidList() {
+        List<GetFaqUuidResponseVo> faqList = boardService.getFaqBoardUuidListByBoardType(BoardType.FAQ)
+                .stream().map(GetFaqUuidResponseDto::toVo).toList();
+
+        return new BaseResponseEntity<>(faqList);
+    }
+
+    @Operation(summary = "FAQ 상세 조회")
+    @GetMapping("/faq/{boardUuid}")
+    public BaseResponseEntity<GetFaqResponseVo> getFaqDetail(@PathVariable String boardUuid) {
+        return new BaseResponseEntity<>(boardService.getFaqBoardByBoardUuid(boardUuid).toVo());
+    }
 
     // @PostMapping("/{boardType}") -> 공지사항/이벤트/FAQ 작성 (관리자 인증)
 

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BoardImageRepository extends MongoRepository<BoardImage, String> {
     List<BoardImage> findByBoardUuid(String boardUuid);
+
+    List<BoardImage> findByBoardUuidOrderByBoardImageOrderAsc(String boardUuid);
 }
