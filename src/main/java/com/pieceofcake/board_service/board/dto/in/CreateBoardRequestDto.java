@@ -23,14 +23,12 @@ public class CreateBoardRequestDto {
     private String memberUuid;
     private LocalDateTime endDate;
     private BoardType boardType;
-    private BoardCategory boardCategory;
     private List<BoardImageRequestDto> boardImageRequestDtoList;
 
     @Builder
     public CreateBoardRequestDto(String boardUuid, String boardTitle, String boardContent,
                                  String memberUuid, LocalDateTime endDate,
-                                 BoardType boardType, BoardCategory boardCategory,
-                                 List<BoardImageRequestDto> boardImageRequestDtoList
+                                 BoardType boardType, List<BoardImageRequestDto> boardImageRequestDtoList
     ) {
         this.boardUuid = boardUuid;
         this.boardTitle = boardTitle;
@@ -38,7 +36,6 @@ public class CreateBoardRequestDto {
         this.memberUuid = memberUuid;
         this.endDate = endDate;
         this.boardType = boardType;
-        this.boardCategory = boardCategory;
         this.boardImageRequestDtoList = boardImageRequestDtoList;
     }
 
@@ -50,7 +47,6 @@ public class CreateBoardRequestDto {
                 .memberUuid(memberUuid)
                 .endDate(createBoardRequestVo.getEndDate())
                 .boardType(createBoardRequestVo.getBoardType())
-                .boardCategory(createBoardRequestVo.getBoardCategory())
                 .boardImageRequestDtoList(createBoardRequestVo.getBoardImageRequestVoList()
                         .stream().map(BoardImageRequestDto::from).toList())
                 .build();
@@ -64,7 +60,6 @@ public class CreateBoardRequestDto {
                 .memberUuid(memberUuid)
                 .endDate(endDate)
                 .boardType(boardType)
-                .boardCategory(boardCategory)
                 .build();
     }
 }

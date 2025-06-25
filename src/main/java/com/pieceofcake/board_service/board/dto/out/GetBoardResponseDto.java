@@ -21,7 +21,6 @@ public class GetBoardResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime endDate;
     private BoardType boardType;
-    private BoardCategory boardCategory;
 
     @Builder
     public GetBoardResponseDto(
@@ -36,7 +35,6 @@ public class GetBoardResponseDto {
         this.createdAt = createdAt;
         this.endDate = endDate;
         this.boardType = boardType;
-        this.boardCategory = boardCategory;
     }
 
     public static GetBoardResponseDto from(Board board) {
@@ -49,7 +47,6 @@ public class GetBoardResponseDto {
                 .createdAt(board.getCreatedAt())
                 .endDate(board.getEndDate())
                 .boardType(board.getBoardType())
-                .boardCategory(board.getBoardCategory())
                 .build();
     }
 
@@ -62,7 +59,6 @@ public class GetBoardResponseDto {
                 .createdAt(this.createdAt)
                 .endDate(this.endDate)
                 .boardType(this.boardType)
-                .boardCategory(this.boardCategory)
                 .build();
     }
 
