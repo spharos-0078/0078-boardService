@@ -10,5 +10,7 @@ public enum BoardType {
     EVENT,
     FAQ,
     NORMAL_REQUEST,
-    SALE_REQUEST
+    SALE_REQUEST,
+    FUNDING,
+    PIECE
 }
