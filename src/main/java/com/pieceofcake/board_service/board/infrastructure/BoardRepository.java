@@ -9,10 +9,6 @@ import java.util.Optional;
 
 public interface BoardRepository extends MongoRepository<Board, String> {
 
-//    List<Board> findByBoardType(BoardType boardType);
-//
-//    List<Board> findByMemberUuid(String memberUuid);
-
     boolean existsByBoardTypeAndBoardUuidAndDeletedFalse(BoardType boardType, String boardUuid);
 
     List<Board> findByBoardTypeAndDeletedFalse(BoardType boardType);

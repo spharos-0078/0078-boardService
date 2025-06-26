@@ -1,9 +1,7 @@
 package com.pieceofcake.board_service.board.application;
 
 import com.pieceofcake.board_service.board.domain.BoardImage;
-import com.pieceofcake.board_service.board.dto.in.CreateBoardImageRequestDto;
-import com.pieceofcake.board_service.board.dto.in.CreateBoardRequestDto;
-import com.pieceofcake.board_service.board.dto.in.CreateCommunityRequestDto;
+import com.pieceofcake.board_service.board.dto.in.*;
 import com.pieceofcake.board_service.board.dto.out.*;
 import com.pieceofcake.board_service.board.domain.Board;
 import com.pieceofcake.board_service.board.domain.BoardType;
@@ -22,29 +20,6 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
     private final BoardImageRepository boardImageRepository;
-
-//    @Override
-//    public List<GetBoardResponseDto> getBoardList(BoardType boardType) {
-//        List<Board> boardList = boardRepository.findByBoardType(boardType);
-//        return boardList.stream().map(GetBoardResponseDto::from).toList();
-//    }
-//
-//    // pagable
-//    // 동적 호출 -> query dsl
-//
-//    // 게시글 생성
-//    @Override
-//    public void createBoard(CreateBoardRequestDto createBoardRequestDto) {
-//        String boardUuid = UUID.randomUUID().toString().substring(0, 32);
-//        Board board = boardRepository.save(createBoardRequestDto.toEntity(boardUuid));
-//
-//        List<BoardImage> boardImageList = boardImageRepository.saveAll(
-//                CreateBoardImageRequestDto.of(boardUuid, createBoardRequestDto.getBoardImageRequestDtoList())
-//                        .getBoardImageRequestDtoList()
-//                        .stream().map(i -> i.toEntity(boardUuid))
-//                        .toList()
-//        );
-//    }
 
     // 공지사항 UUID 리스트 조회
     @Override
@@ -95,6 +70,47 @@ public class BoardServiceImpl implements BoardService {
         List<BoardImage> boardImages = boardImageRepository.findByBoardUuidOrderByBoardImageOrderAsc(boardUuid);
         return GetFaqResponseDto.from(board, boardImages);
     }
+
+    // 공지사항 생성
+    @Override
+    public void createNotice(CreateNoticeRequestDto createNoticeRequestDto) {
+        Board board = createNoticeRequestDto.toEntity();
+        boardRepository.save(board);
+
+        List<BoardImage> boardImages = createNoticeRequestDto.getBoardImageRequestDtoList().stream()
+                .map(img -> img.toEntity(createNoticeRequestDto.getBoardUuid()))
+                .toList();
+
+        boardImageRepository.saveAll(boardImages);
+    }
+
+    // 이벤트 생성
+    @Override
+    public void createEvent(CreateEventRequestDto createEventRequestDto) {
+        Board board = createEventRequestDto.toEntity();
+        boardRepository.save(board);
+
+        List<BoardImage> boardImages = createEventRequestDto.getBoardImageRequestDtoList().stream()
+                .map(img -> img.toEntity(createEventRequestDto.getBoardUuid()))
+                .toList();
+
+        boardImageRepository.saveAll(boardImages);
+
+    }
+
+    // FAQ 생성
+    @Override
+    public void createFaq(CreateFaqRequestDto createFaqRequestDto) {
+        Board board = createFaqRequestDto.toEntity();
+        boardRepository.save(board);
+
+        List<BoardImage> boardImages = createFaqRequestDto.getBoardImageRequestDtoList().stream()
+                .map(img -> img.toEntity(createFaqRequestDto.getBoardUuid()))
+                .toList();
+
+        boardImageRepository.saveAll(boardImages);
+    }
+
 
     // 커뮤니티 게시판 생성
     @Override

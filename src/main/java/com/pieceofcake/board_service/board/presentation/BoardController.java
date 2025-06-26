@@ -1,14 +1,16 @@
 package com.pieceofcake.board_service.board.presentation;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.pieceofcake.board_service.board.application.BoardService;
-import com.pieceofcake.board_service.board.dto.in.CreateBoardRequestDto;
 import com.pieceofcake.board_service.board.dto.in.CreateCommunityRequestDto;
+import com.pieceofcake.board_service.board.dto.in.CreateEventRequestDto;
+import com.pieceofcake.board_service.board.dto.in.CreateFaqRequestDto;
+import com.pieceofcake.board_service.board.dto.in.CreateNoticeRequestDto;
 import com.pieceofcake.board_service.board.dto.out.*;
 import com.pieceofcake.board_service.board.domain.BoardType;
-import com.pieceofcake.board_service.board.vo.in.CreateBoardRequestVo;
 import com.pieceofcake.board_service.board.vo.in.CreateCommunityRequestVo;
-import com.pieceofcake.board_service.board.vo.in.CreateSaleRequestVo;
+import com.pieceofcake.board_service.board.vo.in.CreateEventRequestVo;
+import com.pieceofcake.board_service.board.vo.in.CreateFaqRequestVo;
+import com.pieceofcake.board_service.board.vo.in.CreateNoticeRequestVo;
 import com.pieceofcake.board_service.board.vo.out.*;
 import com.pieceofcake.board_service.common.entity.BaseResponseEntity;
 import com.pieceofcake.board_service.common.entity.BaseResponseStatus;
@@ -32,28 +34,6 @@ public class BoardController {
     public ResponseEntity<String> hello() {
         return ResponseEntity.ok("Hello from board-service!");
     }
-
-//    // 공지사항, FAQ, 이벤트 게시판 전체조회
-//    // 페이지네이션 적용할 것
-//    @Operation(summary = "게시판 타입별 전체 조회")
-//    @GetMapping("/list/{boardType}")
-//    public BaseResponseEntity<List<GetBoardResponseVo>> getBoardList(
-//            @PathVariable("boardType") BoardType boardType
-//    ) {
-//        List<GetBoardResponseVo> result = boardService.getBoardList(boardType)
-//                .stream().map(GetBoardResponseDto::toVo).toList();
-//        return new BaseResponseEntity<>(result);
-//    }
-//
-//    @Operation(summary = "게시글 생성")
-//    @PostMapping
-//    public BaseResponseEntity<Void> createBoard(
-//            @RequestHeader("X-Member-Uuid") String memberUuid,
-//            @RequestBody CreateBoardRequestVo createBoardRequestVo
-//    ) {
-//        boardService.createBoard(CreateBoardRequestDto.from(memberUuid, createBoardRequestVo));
-//        return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
-//    }
 
     @Operation(summary = "공지사항 UUID 리스트 조회")
     @GetMapping("/notice")
@@ -99,11 +79,51 @@ public class BoardController {
         return new BaseResponseEntity<>(boardService.getFaqBoardByBoardUuid(boardUuid).toVo());
     }
 
-    // @PostMapping("/{boardType}") -> 공지사항/이벤트/FAQ 작성 (관리자 인증)
+    // @PostMapping("/notice") -> 공지사항 생성
+    @Operation(summary = "공지사항 생성")
+    @PostMapping("/notice")
+    public BaseResponseEntity<Void> createNotice(
+            @RequestHeader("X-Member-Uuid") String memberUuid,
+            @RequestBody CreateNoticeRequestVo createNoticeRequestVo
+    ) {
+        boardService.createNotice(CreateNoticeRequestDto.from(memberUuid, createNoticeRequestVo));
+        return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
+    }
 
-    // @PutMapping("/{boardType}/{boardUuid}") -> 공지사항/이벤트/FAQ 수정 (관리자 인증)
+    // @PutMapping("/notice/{boardUuid}") -> 공지사항 수정
 
-    // @DeleteMapping("/{boardType}/{boardUuid}") -> 공지사항/이벤트/FAQ 수정 (관리자 인증)
+    // @DeleteMapping("/notice/{boardUuid}") -> 공지사항 삭제
+
+    // @PostMapping("/event") -> 이벤트 게시판 생성
+    @Operation(summary = "이벤트 생성")
+    @PostMapping("/event")
+    public BaseResponseEntity<Void> createEvent(
+            @RequestHeader("X-Member-Uuid") String memberUuid,
+            @RequestBody CreateEventRequestVo createEventRequestVo
+    ) {
+        boardService.createEvent(CreateEventRequestDto.from(memberUuid, createEventRequestVo));
+        return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
+    }
+
+    // @PutMapping("/event/{boardUuid}") -> 이벤트 수정
+
+    // @DeleteMapping("/event/{boardUuid}") -> 이벤트 삭제
+
+    // @PostMapping("/faq") -> FAQ 생성
+    @Operation(summary = "FAQ 생성")
+    @PostMapping("/faq")
+    public BaseResponseEntity<Void> createFaq(
+            @RequestHeader("X-Member-Uuid") String memberUuid,
+            @RequestBody CreateFaqRequestVo createFaqRequestVo
+    ) {
+        boardService.createFaq(CreateFaqRequestDto.from(memberUuid, createFaqRequestVo));
+        return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
+    }
+
+    // @PutMapping("/faq/{boardUuid}") -> FAQ 수정
+
+    // @DeleteMapping("/faq/{boardUuid}") -> FAQ 삭제
+
 
     // @PostMapping("/community") -> 공모/조각 커뮤니티 게시판 생성
     @Operation(summary = "공모/조각 커뮤니티 게시판 생성")
