@@ -15,7 +15,6 @@ public class CreateSaleRequestVo {
 
     private String boardTitle;
     private String boardContent;
-    private BoardType boardType;
     private Long desiredPrice;
     private String mainCategoryId;
     private String subCategoryId;
@@ -25,13 +24,12 @@ public class CreateSaleRequestVo {
 
     @Builder
     public CreateSaleRequestVo(
-            String boardTitle, String boardContent, BoardType boardType,
+            String boardTitle, String boardContent,
             Long desiredPrice, String mainCategoryId, String subCategoryId,
             String mainCategoryName, String subCategoryName, List<BoardImageRequestVo> boardImageRequestVoList
     ) {
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
-        this.boardType = boardType;
         this.desiredPrice = desiredPrice;
         this.mainCategoryId = mainCategoryId;
         this.subCategoryId = subCategoryId;
