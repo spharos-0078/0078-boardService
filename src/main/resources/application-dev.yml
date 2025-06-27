@@ -13,3 +13,15 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://${EC2_HOST}:8761/eureka/
+
+openai:
+  api:
+    model: gpt-4o
+    key: ${GPT_API_KEY}
+    temperature: 0.0
+    maxTokens: 500
+
+    url:
+      model: https://api.openai.com/v1/models
+      model-list: https://api.openai.com/v1/models
+      prompt: https://api.openai.com/v1/chat/completions

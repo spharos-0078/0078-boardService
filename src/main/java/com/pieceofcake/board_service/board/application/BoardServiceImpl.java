@@ -1,5 +1,8 @@
 package com.pieceofcake.board_service.board.application;
 
+import com.pieceofcake.board_service.ai.application.AiService;
+import com.pieceofcake.board_service.ai.dto.in.AiRequestDto;
+import com.pieceofcake.board_service.ai.dto.out.AiResponseDto;
 import com.pieceofcake.board_service.board.domain.BoardImage;
 import com.pieceofcake.board_service.board.dto.in.*;
 import com.pieceofcake.board_service.board.dto.out.*;
@@ -20,6 +23,7 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
     private final BoardImageRepository boardImageRepository;
+    private final AiService aiService;
 
     // 공지사항 UUID 리스트 조회
     @Override
@@ -111,6 +115,35 @@ public class BoardServiceImpl implements BoardService {
         boardImageRepository.saveAll(boardImages);
     }
 
+    // 판매 문의 생성
+    @Override
+    public void createSaleRequest(CreateSaleRequestDto createSaleRequestDto) {
+        String boardUuid = UUID.randomUUID().toString().substring(0, 32);
+
+        // 이미지 최대 3개까지만 전달
+        List<String> imageUrls = createSaleRequestDto.getBoardImageRequestDtoList().stream()
+                .limit(3)
+                .map(BoardImageRequestDto::getBoardImageUrl)
+                .toList();
+
+        // AI 호출
+        String joinedImageUrls = String.join(",", imageUrls);
+        AiRequestDto aiRequestDto = AiRequestDto.of(createSaleRequestDto.getBoardTitle(), joinedImageUrls);
+        AiResponseDto aiResponseDto = aiService.getAnswer(aiRequestDto);
+
+        Long aiEstimatedPrice = aiResponseDto.getEstimatedPrice(); // "11500000"
+        String aiEstimatedDescription = aiResponseDto.getDescription(); // 설명
+
+        // 게시글 저장
+        Board board = boardRepository.save(createSaleRequestDto.toEntity(boardUuid, aiEstimatedPrice, aiEstimatedDescription));
+
+        // 이미지 저장
+        List<BoardImage> imageEntities = boardImageRepository.saveAll(
+                createSaleRequestDto.getBoardImageRequestDtoList().stream()
+                        .map(imgDto -> imgDto.toEntity(boardUuid))
+                        .toList()
+        );
+    }
 
     // 커뮤니티 게시판 생성
     @Override

@@ -44,6 +44,8 @@ public class Board extends BaseEntity {
     // ai 예측 가격
     private Long aiEstimatedPrice;
 
+    private String aiEstimatedDescription;
+
     // 메인 카테고리 ID
     private String mainCategoryId;
 
@@ -70,6 +72,7 @@ public class Board extends BaseEntity {
             LocalDateTime endDate,
             Long desiredPrice,
             Long aiEstimatedPrice,
+            String aiEstimatedDescription,
             String mainCategoryId,
             String subCategoryId,
             String mainCategoryName,
@@ -86,6 +89,7 @@ public class Board extends BaseEntity {
         this.endDate = endDate;
         this.desiredPrice = desiredPrice;
         this.aiEstimatedPrice = aiEstimatedPrice;
+        this.aiEstimatedDescription = aiEstimatedDescription;
         this.mainCategoryId = mainCategoryId;
         this.subCategoryId = subCategoryId;
         this.mainCategoryName = mainCategoryName;

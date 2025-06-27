@@ -28,4 +28,6 @@ public interface BoardService {
 
     void createFaq(CreateFaqRequestDto createFaqRequestDto);
 
+    void createSaleRequest(CreateSaleRequestDto createSaleRequestDto);
+
 }
