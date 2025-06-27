@@ -41,15 +41,15 @@ public class AiResponseDto {
      * 가격과 설명을 파싱해서 반환하는 커스텀 응답 변환기
      */
     public ParsedAiResult parseResult() {
-        Pattern pattern = Pattern.compile("[\\d,]+\\.");
+        Pattern pattern = Pattern.compile("\\d{4,}(,\\d{3})*");
         Matcher matcher = pattern.matcher(result);
 
         String price = "";
         String description = "";
 
         if (matcher.find()) {
-            price = matcher.group().replace(".", "").trim(); // 마침표 제거
-            description = result.substring(matcher.end()).trim().replaceAll("^\"|\"$", ""); // 설명 부분
+            price = matcher.group().replace(",", "").trim(); // 쉼표 제거
+            description = result.substring(matcher.end()).trim().replaceAll("^\"|\"$", "");
         }
 
         return new ParsedAiResult(price.replace(",", ""), description); // 쉼표 제거한 숫자
@@ -69,11 +69,11 @@ public class AiResponseDto {
         if (result == null) return null;
 
         // 숫자만 추출
-        Pattern pattern = Pattern.compile("(\\d{1,3}(,\\d{3})*|\\d+)");
+        Pattern pattern = Pattern.compile("\\d{4,}(,\\d{3})*"); // 4자리 이상만 타겟팅
         Matcher matcher = pattern.matcher(result);
 
         if (matcher.find()) {
-            String numeric = matcher.group().replaceAll(",", "");
+            String numeric = matcher.group().replace(",", "");
             return Long.parseLong(numeric);
         }
 
