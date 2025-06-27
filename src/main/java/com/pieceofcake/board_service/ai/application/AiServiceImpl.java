@@ -69,13 +69,27 @@ public class AiServiceImpl implements AiService{
         systemMessage.put("content", "당신은 희귀 및 명품 물품의 가격 책정 전문가입니다. 이미지와 설명을 바탕으로 이 물품의 한국 원화 예상 가격을 숫자로만 추정해주세요. 이후 그 예상가를 선정한 이유를 짧게 한 문장으로 설명하세요. 해당 신상품의 가격, 비슷한 대조군 등을 예시에 포함하면 좋습니다. 예: \"32,000. 이 물품은 한정판으로, 현재 시장에서 비슷한 제품의 가격이 30,000원에서 35,000원 사이입니다. 따라서 이 물품의 예상가는 32,000원입니다.\"");
 
         // 2. User 역할: 텍스트 설명과 이미지 함께 제공
+        List<Map<String, Object>> userContent = new java.util.ArrayList<>();
+
+        // 텍스트 설명 추가
+        userContent.add(Map.of(
+                "type", "text",
+                "text", aiRequestDto.getDescription()
+        ));
+
+        // 이미지 URL들을 순회하며 추가
+        for (String imageUrl : aiRequestDto.getImageUrls()) {
+            userContent.add(Map.of(
+                    "type", "image_url",
+                    "image_url", Map.of("url", imageUrl)
+            ));
+        }
+
         Map<String, Object> userMessage = Map.of(
                 "role", "user",
-                "content", List.of(
-                        Map.of("type", "text", "text", aiRequestDto.getDescription()),
-                        Map.of("type", "image_url", "image_url", Map.of("url", aiRequestDto.getImageUrls()))
-                )
+                "content", userContent
         );
+
         // 3. 전체 요청 구성
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model", properties.getModel()); // "gpt-4o" 또는 "gpt-4-vision-preview"
