@@ -14,4 +14,8 @@ public interface BoardRepository extends MongoRepository<Board, String> {
     List<Board> findByBoardTypeAndDeletedFalse(BoardType boardType);
 
     Optional<Board> findByBoardUuidAndBoardTypeAndDeletedFalse(String boardUuid, BoardType boardType);
+
+    List<Board> findByBoardTypeAndMemberUuidAndDeletedFalse(BoardType boardType, String memberUuid);
+
+    Optional<Board> findByBoardUuidAndMemberUuidAndDeletedFalse(String boardUuid, String memberUuid);
 }

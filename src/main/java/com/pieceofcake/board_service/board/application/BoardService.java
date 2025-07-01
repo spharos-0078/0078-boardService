@@ -9,25 +9,24 @@ import java.util.List;
 public interface BoardService {
 
     List<GetNoticeUuidResponseDto> getNoticeBoardUuidListByBoardType(BoardType boardType);
-
     List<GetEventUuidResponseDto> getEventBoardUuidListByBoardType(BoardType boardType);
-
     List<GetFaqUuidResponseDto> getFaqBoardUuidListByBoardType(BoardType boardType);
 
     GetNoticeResponseDto getNoticeBoardByBoardUuid(String boardUuid);
-
     GetEventResponseDto getEventBoardByBoardUuid(String boardUuid);
-
     GetFaqResponseDto getFaqBoardByBoardUuid(String boardUuid);
 
+    List<GetMySaleUuidResponseDto> getSaleBoardUuidListByMemberUuid(String memberUuid);
+    List<GetMySaleUuidResponseDto> getNormalBoardUuidListByMemberUuid(String memberUuid);
+
+    GetMySaleResponseDto getMySaleDetailByMemberUuidAndBoardUuid(String memberUuid, String boardUuid);
+    GetMyNormalResponseDto getMyNormalDetailByMemberUuidAndBoardUuid(String memberUuid, String boardUuid);
+
     void createCommunityBoard(CreateCommunityRequestDto createCommunityRequestDto);
-
     void createNotice(CreateNoticeRequestDto createNoticeRequestDto);
-
     void createEvent(CreateEventRequestDto createEventRequestDto);
-
     void createFaq(CreateFaqRequestDto createFaqRequestDto);
-
     void createSaleRequest(CreateSaleRequestDto createSaleRequestDto);
+    void createNormalRequest(CreateNormalRequestDto createNormalRequestDto);
 
 }

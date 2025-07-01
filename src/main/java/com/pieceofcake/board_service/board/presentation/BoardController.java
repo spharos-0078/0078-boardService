@@ -135,4 +135,12 @@ public class BoardController {
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }
 
+    // 공모 게시판 UUID 리스트 조회
+
+    // 공모 게시판 상세 조회
+
+    // 조각상품 게시판 UUID 리스트 조회
+
+    // 조각상품 게시판 상세 조회 -> 댓글 리스트 조회 ?
+
 }

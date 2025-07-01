@@ -13,9 +13,9 @@ import com.pieceofcake.board_service.board.infrastructure.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -115,6 +115,46 @@ public class BoardServiceImpl implements BoardService {
         boardImageRepository.saveAll(boardImages);
     }
 
+    // 일반 문의 생성
+    @Override
+    public void createNormalRequest(CreateNormalRequestDto createNormalRequestDto) {
+        Board board = createNormalRequestDto.toEntity();
+        boardRepository.save(board);
+
+        List<BoardImage> boardImages = createNormalRequestDto.getBoardImageRequestDtoList().stream()
+                .map(img -> img.toEntity(createNormalRequestDto.getBoardUuid()))
+                .toList();
+
+        boardImageRepository.saveAll(boardImages);
+    }
+
+    // 일반 문의 UUID 리스트 조회
+    @Override
+    public List<GetMySaleUuidResponseDto> getNormalBoardUuidListByMemberUuid(String memberUuid) {
+        List<Board> uuidList = boardRepository.findByBoardTypeAndMemberUuidAndDeletedFalse(BoardType.NORMAL_REQUEST, memberUuid);
+        return uuidList.stream().map(GetMySaleUuidResponseDto::from).toList();
+    }
+
+    @Override
+    public GetMyNormalResponseDto getMyNormalDetailByMemberUuidAndBoardUuid(String memberUuid, String boardUuid) {
+        // 게시글 조회
+        Board board = boardRepository.findByBoardUuidAndMemberUuidAndDeletedFalse(memberUuid, boardUuid)
+                .orElseThrow(() -> new IllegalArgumentException("해당 일반 문의를 찾을 수 없습니다."));
+
+        // 이미지 조회
+        List<BoardImage> boardImages = boardImageRepository.findByBoardUuid(boardUuid);
+
+        // 이미지 변환
+        List<GetMyNormalResponseDto.BoardImageVo> imageVos = boardImages.stream()
+                .map(img -> GetMyNormalResponseDto.BoardImageVo.builder()
+                        .boardImageUrl(img.getBoardImageUrl())
+                        .boardImageOrder(img.getBoardImageOrder())
+                        .build())
+                .toList();
+
+        return GetMyNormalResponseDto.from(board, imageVos);
+    }
+
     // 판매 문의 생성
     @Override
     public void createSaleRequest(CreateSaleRequestDto createSaleRequestDto) {
@@ -143,6 +183,31 @@ public class BoardServiceImpl implements BoardService {
                         .map(imgDto -> imgDto.toEntity(boardUuid))
                         .toList()
         );
+    }
+
+    // 판매 문의 Uuid 리스트 조회
+    @Override
+    public List<GetMySaleUuidResponseDto> getSaleBoardUuidListByMemberUuid(String memberUuid) {
+        List<Board> uuidList = boardRepository.findByBoardTypeAndMemberUuidAndDeletedFalse(BoardType.SALE_REQUEST, memberUuid);
+        return uuidList.stream().map(GetMySaleUuidResponseDto::from).toList();
+    }
+
+    // 판매 문의 상세 조회
+    @Override
+    public GetMySaleResponseDto getMySaleDetailByMemberUuidAndBoardUuid(String memberUuid, String boardUuid) {
+        Board board = boardRepository.findByBoardUuidAndMemberUuidAndDeletedFalse(boardUuid, memberUuid)
+                .orElseThrow(() -> new IllegalArgumentException("판매 문의글이 존재하지 않습니다."));
+
+        List<BoardImage> boardImages = boardImageRepository.findByBoardUuidOrderByBoardImageOrderAsc(boardUuid);
+
+        List<GetMySaleResponseDto.BoardImageVo> imageVos = boardImages.stream()
+                .map(image -> GetMySaleResponseDto.BoardImageVo.builder()
+                        .boardImageUrl(image.getBoardImageUrl())
+                        .boardImageOrder(image.getBoardImageOrder())
+                        .build())
+                .collect(Collectors.toList());
+
+        return GetMySaleResponseDto.from(board, imageVos);
     }
 
     // 커뮤니티 게시판 생성
