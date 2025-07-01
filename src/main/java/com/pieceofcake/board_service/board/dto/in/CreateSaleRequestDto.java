@@ -77,7 +77,7 @@ public class CreateSaleRequestDto {
     public Board toEntity(String boardUuid, Long aiEstimatedPrice, String aiEstimatedDescription) {
         return Board.builder()
                 .memberUuid(memberUuid)
-                .boardUuid(this.boardUuid)
+                .boardUuid(boardUuid)
                 .boardTitle(boardTitle)
                 .boardType(BoardType.SALE_REQUEST)
                 .boardContent(boardContent)
