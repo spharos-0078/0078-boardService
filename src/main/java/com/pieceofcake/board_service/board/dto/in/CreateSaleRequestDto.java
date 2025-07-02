@@ -88,6 +88,7 @@ public class CreateSaleRequestDto {
                 .subCategoryName(subCategoryName)
                 .aiEstimatedPrice(aiEstimatedPrice)
                 .aiEstimatedDescription(aiEstimatedDescription)
+                .boardAnswered(false) // 기본값 설정
                 .deleted(false)
                 .build();
     }

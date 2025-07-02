@@ -3,6 +3,8 @@ package com.pieceofcake.board_service.ai.application;
 import com.pieceofcake.board_service.ai.dto.in.AiRequestDto;
 import com.pieceofcake.board_service.ai.dto.out.AiResponseDto;
 import com.pieceofcake.board_service.common.config.OpenAiProperties;
+import com.pieceofcake.board_service.common.entity.BaseResponseStatus;
+import com.pieceofcake.board_service.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -110,8 +112,19 @@ public class AiServiceImpl implements AiService{
         );
 
         List<Map<String, Object>> choices = (List<Map<String, Object>>) response.getBody().get("choices");
+        if (choices == null || choices.isEmpty()) {
+            throw new BaseException(BaseResponseStatus.AI_PRICE_ESTIMATION_FAILED);
+        }
+        
         Map<String, Object> message = (Map<String, Object>) choices.get(0).get("message");
+        if (message == null) {
+            throw new BaseException(BaseResponseStatus.AI_PRICE_ESTIMATION_FAILED);
+        }
+        
         String content = (String) message.get("content");
+        if (content == null || content.trim().isEmpty()) {
+            throw new BaseException(BaseResponseStatus.AI_PRICE_ESTIMATION_FAILED);
+        }
 
         return new AiResponseDto(properties.getModel(), content.trim());
     }

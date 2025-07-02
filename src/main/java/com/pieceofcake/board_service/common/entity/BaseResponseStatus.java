@@ -183,7 +183,35 @@ public enum BaseResponseStatus {
 
     // 기획전(이벤트)
     NO_EXIST_EVENT(HttpStatus.NOT_FOUND, false, 20040, "기획전 정보가 존재하지 않습니다."),
-    NO_EXIST_PRODUCT_EVENT(HttpStatus.NOT_FOUND, false, 20041, "상품 기획전 정보가 존재하지 않습니다.");
+    NO_EXIST_PRODUCT_EVENT(HttpStatus.NOT_FOUND, false, 20041, "상품 기획전 정보가 존재하지 않습니다."),
+
+    /**
+     * 8000: board service error
+     */
+    // Board
+    NO_EXIST_BOARD(HttpStatus.NOT_FOUND, false, 8001, "존재하지 않는 게시글입니다."),
+    NO_EXIST_NOTICE(HttpStatus.NOT_FOUND, false, 8002, "존재하지 않는 공지사항입니다."),
+    NO_EXIST_EVENT_BOARD(HttpStatus.NOT_FOUND, false, 8003, "존재하지 않는 이벤트입니다."),
+    NO_EXIST_FAQ(HttpStatus.NOT_FOUND, false, 8004, "존재하지 않는 FAQ입니다."),
+    NO_EXIST_SALE_REQUEST(HttpStatus.NOT_FOUND, false, 8005, "판매 문의글이 존재하지 않습니다."),
+    NO_EXIST_NORMAL_REQUEST(HttpStatus.NOT_FOUND, false, 8006, "해당 일반 문의를 찾을 수 없습니다."),
+    
+    // Board Validation
+    INVALID_BOARD_TITLE(HttpStatus.BAD_REQUEST, false, 8101, "게시글 제목은 필수이며 1-100자 사이여야 합니다."),
+    INVALID_BOARD_CONTENT(HttpStatus.BAD_REQUEST, false, 8102, "게시글 내용은 필수이며 1-2000자 사이여야 합니다."),
+    INVALID_DESIRED_PRICE(HttpStatus.BAD_REQUEST, false, 8103, "희망 가격은 1원 이상 999,999,999원 이하여야 합니다."),
+    INVALID_AI_ESTIMATED_PRICE(HttpStatus.BAD_REQUEST, false, 8104, "AI 예측 가격은 0원 이상 999,999,999원 이하여야 합니다."),
+    INVALID_BOARD_IMAGE_COUNT(HttpStatus.BAD_REQUEST, false, 8105, "이미지는 최대 10개까지 업로드 가능합니다."),
+    INVALID_BOARD_IMAGE_URL(HttpStatus.BAD_REQUEST, false, 8106, "유효하지 않은 이미지 URL입니다."),
+    INVALID_CATEGORY_ID(HttpStatus.BAD_REQUEST, false, 8107, "유효하지 않은 카테고리 ID입니다."),
+    INVALID_CATEGORY_NAME(HttpStatus.BAD_REQUEST, false, 8108, "카테고리명은 필수이며 1-50자 사이여야 합니다."),
+    
+    // Board Business Logic
+    BOARD_ALREADY_ANSWERED(HttpStatus.CONFLICT, false, 8201, "이미 답변이 완료된 문의입니다."),
+    BOARD_NOT_ANSWERED(HttpStatus.BAD_REQUEST, false, 8202, "아직 답변이 완료되지 않은 문의입니다."),
+    BOARD_ALREADY_DELETED(HttpStatus.BAD_REQUEST, false, 8203, "이미 삭제된 게시글입니다."),
+    BOARD_ACCESS_DENIED(HttpStatus.FORBIDDEN, false, 8204, "해당 게시글에 대한 접근 권한이 없습니다."),
+    AI_PRICE_ESTIMATION_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, false, 8205, "AI 가격 예측에 실패했습니다.");
 
 
     private final HttpStatusCode httpStatusCode;

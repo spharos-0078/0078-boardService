@@ -23,7 +23,7 @@ public class Board extends BaseEntity {
     private BoardType boardType;
 
     // 문의 답변 완료 여부
-    private Boolean boardAnswered;
+    private boolean boardAnswered = false;
 
     // 게시판 제목 or 판매문의 상품명
     private String boardTitle;
@@ -65,7 +65,7 @@ public class Board extends BaseEntity {
             String id,
             String boardUuid,
             BoardType boardType,
-            Boolean boardAnswered,
+            boolean boardAnswered,
             String boardTitle,
             String boardContent,
             String memberUuid,
@@ -98,4 +98,12 @@ public class Board extends BaseEntity {
     }
 
     public void softDelete() { this.deleted = true; }
+    
+    public void markAsAnswered() { this.boardAnswered = true; }
+    
+    public void markAsUnanswered() { this.boardAnswered = false; }
+    
+    public boolean isAnswered() { return this.boardAnswered; }
+    
+    public boolean isDeleted() { return this.deleted; }
 }

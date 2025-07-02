@@ -10,6 +10,8 @@ import com.pieceofcake.board_service.board.domain.Board;
 import com.pieceofcake.board_service.board.domain.BoardType;
 import com.pieceofcake.board_service.board.infrastructure.BoardImageRepository;
 import com.pieceofcake.board_service.board.infrastructure.BoardRepository;
+import com.pieceofcake.board_service.common.entity.BaseResponseStatus;
+import com.pieceofcake.board_service.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +38,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public GetNoticeResponseDto getNoticeBoardByBoardUuid(String boardUuid) {
         Board board = boardRepository.findByBoardUuidAndBoardTypeAndDeletedFalse(boardUuid, BoardType.REPORT)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 공지사항입니다."));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_NOTICE));
 
         List<BoardImage> boardImages = boardImageRepository.findByBoardUuidOrderByBoardImageOrderAsc(boardUuid);
 
@@ -54,7 +56,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public GetEventResponseDto getEventBoardByBoardUuid(String boardUuid) {
         Board board = boardRepository.findByBoardUuidAndBoardTypeAndDeletedFalse(boardUuid, BoardType.EVENT)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이벤트입니다."));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_EVENT_BOARD));
         List<BoardImage> boardImages = boardImageRepository.findByBoardUuidOrderByBoardImageOrderAsc(boardUuid);
         return GetEventResponseDto.from(board, boardImages);
     }
@@ -70,7 +72,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public GetFaqResponseDto getFaqBoardByBoardUuid(String boardUuid) {
         Board board = boardRepository.findByBoardUuidAndBoardTypeAndDeletedFalse(boardUuid, BoardType.FAQ)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 FAQ입니다."));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_FAQ));
         List<BoardImage> boardImages = boardImageRepository.findByBoardUuidOrderByBoardImageOrderAsc(boardUuid);
         return GetFaqResponseDto.from(board, boardImages);
     }
@@ -139,7 +141,7 @@ public class BoardServiceImpl implements BoardService {
     public GetMyNormalResponseDto getMyNormalDetailByMemberUuidAndBoardUuid(String memberUuid, String boardUuid) {
         // 게시글 조회
         Board board = boardRepository.findByBoardUuidAndMemberUuidAndDeletedFalse(memberUuid, boardUuid)
-                .orElseThrow(() -> new IllegalArgumentException("해당 일반 문의를 찾을 수 없습니다."));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_NORMAL_REQUEST));
 
         // 이미지 조회
         List<BoardImage> boardImages = boardImageRepository.findByBoardUuid(boardUuid);
@@ -196,7 +198,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public GetMySaleResponseDto getMySaleDetailByMemberUuidAndBoardUuid(String memberUuid, String boardUuid) {
         Board board = boardRepository.findByBoardUuidAndMemberUuidAndDeletedFalse(boardUuid, memberUuid)
-                .orElseThrow(() -> new IllegalArgumentException("판매 문의글이 존재하지 않습니다."));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_SALE_REQUEST));
 
         List<BoardImage> boardImages = boardImageRepository.findByBoardUuidOrderByBoardImageOrderAsc(boardUuid);
 

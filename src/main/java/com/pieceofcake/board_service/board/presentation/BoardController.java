@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RequestMapping("/api/v1/board")
@@ -84,7 +86,7 @@ public class BoardController {
     @PostMapping("/notice")
     public BaseResponseEntity<Void> createNotice(
             @RequestHeader("X-Member-Uuid") String memberUuid,
-            @RequestBody CreateNoticeRequestVo createNoticeRequestVo
+            @Valid @RequestBody CreateNoticeRequestVo createNoticeRequestVo
     ) {
         boardService.createNotice(CreateNoticeRequestDto.from(memberUuid, createNoticeRequestVo));
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
@@ -99,7 +101,7 @@ public class BoardController {
     @PostMapping("/event")
     public BaseResponseEntity<Void> createEvent(
             @RequestHeader("X-Member-Uuid") String memberUuid,
-            @RequestBody CreateEventRequestVo createEventRequestVo
+            @Valid @RequestBody CreateEventRequestVo createEventRequestVo
     ) {
         boardService.createEvent(CreateEventRequestDto.from(memberUuid, createEventRequestVo));
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
@@ -114,7 +116,7 @@ public class BoardController {
     @PostMapping("/faq")
     public BaseResponseEntity<Void> createFaq(
             @RequestHeader("X-Member-Uuid") String memberUuid,
-            @RequestBody CreateFaqRequestVo createFaqRequestVo
+            @Valid @RequestBody CreateFaqRequestVo createFaqRequestVo
     ) {
         boardService.createFaq(CreateFaqRequestDto.from(memberUuid, createFaqRequestVo));
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
@@ -129,7 +131,7 @@ public class BoardController {
     @Operation(summary = "공모/조각 커뮤니티 게시판 생성")
     @PostMapping("/community")
     public BaseResponseEntity<Void> createCommunityBoard(
-            @RequestBody CreateCommunityRequestVo createCommunityRequestVo
+            @Valid @RequestBody CreateCommunityRequestVo createCommunityRequestVo
     ) {
         boardService.createCommunityBoard(CreateCommunityRequestDto.from(createCommunityRequestVo));
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);

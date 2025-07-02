@@ -73,6 +73,7 @@ public class CreateNormalRequestDto {
                 .subCategoryId(subCategoryId)
                 .mainCategoryName(mainCategoryName)
                 .subCategoryName(subCategoryName)
+                .boardAnswered(false) // 기본값 설정
                 .deleted(false)
                 .build();
     }
